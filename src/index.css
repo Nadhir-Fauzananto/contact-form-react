@@ -1,0 +1,235 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: hsl(148, 38%, 91%);
+  font-family: 'Karla', sans-serif;
+  color: hsl(184, 14%, 38%);
+  padding: 0 20px;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 10px;
+  border: 2px solid hsl(186, 15%, 59%);
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+}
+
+input:focus, input:active {
+  background-color: hsl(148, 38%, 91%);
+  border: 2px solid hsl(169, 82%, 27%);
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-image: url('/images/icon-radio-selected.svg');
+  background-size: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid hsl(186, 15%, 59%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-size: contain;
+  border-color: hsl(169, 82%, 27%);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-image: url('/images/icon-checkbox-check.svg');
+  background-size: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid hsl(186, 15%, 59%);
+  border-radius: 3px;
+}
+
+input[type="checkbox"]:checked {
+  background-size: contain;
+  border-color: hsl(169, 82%, 27%);
+}
+
+textarea {
+  padding: 10px;
+  width: 100%;
+  height: 200px;
+  border: 2px solid hsl(186, 15%, 59%);
+  border-radius: 3px;
+  resize: vertical;
+}
+
+/* containers */
+
+.contact-form-container {
+  min-width: 300px;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 40px;
+  border: 1px solid hsl(148, 38%, 91%);
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.first-name-container, .last-name-container, .email-container, .message-container, .query-container{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.contact-form-container > .contact-message-container > h1 {
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: hsl(187, 24%, 22%);
+}
+
+.contact-form-container > .contact-message-container > p {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+/* query selection, radio */
+
+.query-container > p {
+  margin-bottom: 10px;
+}
+
+.query-type {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 2px solid hsl(186, 15%, 59%);
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 3px;
+}
+
+.query-type > input {
+  margin-right: 15px;
+}
+
+.query-type > label {
+  margin-bottom: 0;
+}
+
+.query-type:has(input[type="radio"]:checked) {
+  background-color: hsl(148, 38%, 91%);
+}
+
+/* consent check, checkbox */
+
+.consent-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.consent-container > .submit-status-error {
+  flex-basis: 100%;
+}
+
+.consent-container > input {
+  margin-right: 15px;
+}
+
+.consent-container > label {
+  margin-bottom: 0;
+}
+
+.submit-btn {
+  font-size: 1.2rem;
+  font-family: inherit;
+  background-color: hsl(169, 82%, 27%);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* error and success messages */
+
+.submit-status-error {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.7em;
+}
+
+.submit-status-success-container {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: hsl(187, 24%, 22%);
+  color: hsl(148, 38%, 91%);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.submit-status-success-container > .submit-status-success-checkmark {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.submit-status-success-container > p {
+  font-size: 0.8em;
+  margin-bottom: 15px;
+}
+
+.query-container > .submit-status-error {
+  margin-top: 0;
+}
+
+/* tablet and desktop */
+
+@media (min-width: 768px) {
+  body {
+    padding: 40px 40px;
+  }
+
+  .contact-form-container {
+    max-width: 900px;
+  }
+
+  .contact-form-container > .contact-message-container > h1 {
+    font-size: 2.5em;
+  }
+
+  .name-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .first-name-container, .last-name-container {
+    width: 50%;
+  }
+
+  .query-type-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .query-type {
+    width: 50%
+  }
+}
