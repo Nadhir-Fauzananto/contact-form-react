@@ -32,7 +32,7 @@ input[type="radio"] {
   appearance: none;
   width: 20px;
   height: 20px;
-  background-image: url('/images/icon-radio-selected.svg');
+  background-image: url('./images/icon-radio-selected.svg');
   background-size: 0;
   background-repeat: no-repeat;
   background-position: center;
@@ -50,7 +50,7 @@ input[type="checkbox"] {
   appearance: none;
   width: 20px;
   height: 20px;
-  background-image: url('/images/icon-checkbox-check.svg');
+  background-image: url('./images/icon-checkbox-check.svg');
   background-size: 0;
   background-repeat: no-repeat;
   background-position: center;

@@ -1,4 +1,5 @@
 import React from 'react'
+import successCheckIcon from './images/icon-success-check.svg'
 
 export function ContactForm() {
 
@@ -20,47 +21,31 @@ export function ContactForm() {
 
         if (formData.firstName.trim().length < 1) {
             errors.firstName = 'First name is required.'
-            return errors
-        }   else {
-            return errors.firstName = ''
         }
 
         if (formData.lastName.trim().length < 1) {
             errors.lastName = 'Last name is required.'
-            return errors
-        }   else { 
-            return errors.lastName = ''
         }
 
         if (formData.email.trim().length < 1) {
             errors.email = 'A valid email address is required.'
-            return errors
-
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
             errors.email = 'Invalid email address.'
-            return errors
-        } else {
-            return errors.email = ''
         }
 
         if (formData.message.trim().length < 1) {
             errors.message = 'Message cannot be empty.'
-            return errors
-        }   else {
-            return errors.message = ''
         }
 
         if (!queryType) {
             errors.queryType = 'Please select a query type.'
-            return errors
-        } else {
-            return errors.queryType = ''
         }
 
         if (!consent) {
             errors.consent = 'You must agree to be contacted.'
-            return errors
-        }   return errors.consent = ''
+        }
+
+        return errors
     }
 
     const handleInputChange = (e) => {
@@ -83,15 +68,13 @@ export function ContactForm() {
     const handleSubmit = (e) => {
         e.preventDefault()
         const errors = validateForm()
-        console.log(errors)
         if (Object.keys(errors).length > 0) {
             setError(errors)
             setIsFormValid(false)
             setSubmitStatus('error')
             return
-        }
-
-        const data = {
+        } else {
+                const data = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 email: formData.email,
@@ -99,10 +82,9 @@ export function ContactForm() {
                 queryType: queryType,
                 consent: consent
             }
-
-        setIsFormValid(true)
-        setSubmitStatus('success')
-        console.log(data)
+                setIsFormValid(true)
+                setSubmitStatus('success')
+        }
     }
     
     return (
@@ -112,7 +94,7 @@ export function ContactForm() {
                 {submitStatus === 'success' ? 
                 <div className="submit-status-success-container">
                     <div className="submit-status-success-checkmark">
-                        <img src="./images/icon-success-check.svg" alt="Success checkmark"></img>
+                        <img src={successCheckIcon} alt="Success checkmark"></img>
                         <h2>Message Sent!</h2>
                     </div>
                     <p className="submit-status-success-message">Your data has been successfully submitted! Our team will contact you as soon as possible.</p>
@@ -120,7 +102,7 @@ export function ContactForm() {
                 null}
             </div>
 
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={handleSubmit}>
                 <div className="name-container">
                     <div className="first-name-container">
                         <label htmlFor="first-name">First Name *</label>
@@ -134,8 +116,8 @@ export function ContactForm() {
                         aria-required="true"
                         aria-label="Please enter your first name."
                         />
-                        {formData.firstName === "" ? 
-                        <p className="submit-status-error">This field is required.</p> : null}
+                        {error.firstName ? 
+                        <p className="submit-status-error">{error.firstName}</p> : null}
                     </div>
 
                     <div className="last-name-container">
@@ -150,8 +132,8 @@ export function ContactForm() {
                         aria-required="true"
                         aria-label="Please enter your last name."
                         />
-                        {formData.lastName === "" ? 
-                        <p className="submit-status-error">This field is required.</p> : null}
+                        {error.lastName ? 
+                        <p className="submit-status-error">{error.lastName}</p> : null}
                     </div>
                 </div>
 
@@ -167,8 +149,8 @@ export function ContactForm() {
                     aria-required="true"
                     aria-label="Please enter your email address."
                     />
-                    {formData.email === "" || !/\S+@\S+\.\S+/.test(formData.email) ? 
-                    <p className="submit-status-error">Please enter a valid email address</p> : null}
+                    {error.email ? 
+                    <p className="submit-status-error">{error.email}</p> : null}
                 </div>
 
                 <div className="query-container">
@@ -180,7 +162,7 @@ export function ContactForm() {
                             name="query" 
                             id="general-query" 
                             checked={queryType === 'general-query'} 
-                            onChange={() => setQueryType('general-query')}
+                            onChange={() => { setQueryType('general-query'); setError(prev => ({...prev, queryType: ''})) }}
                             aria-required="true"
                             aria-label="Check this for general query."/>
                             <label htmlFor="general-query">General Query</label>
@@ -192,14 +174,14 @@ export function ContactForm() {
                             name="query" 
                             id="support-request" 
                             checked={queryType === 'support-request'} 
-                            onChange={() => setQueryType('support-request')}
+                            onChange={() => { setQueryType('support-request'); setError(prev => ({...prev, queryType: ''})) }}
                             aria-required="true"
                             aria-label="Check this for support request."/>
                             <label htmlFor="support-request">Support Request</label>
                         </div>
                     </div>
-                    {queryType === null ? 
-                    <p className="submit-status-error">Please select a query type.</p> : null}
+                    {error.queryType ? 
+                    <p className="submit-status-error">{error.queryType}</p> : null}
                 </div>
 
                 <div className="message-container">
@@ -212,8 +194,8 @@ export function ContactForm() {
                     onChange={handleInputChange}
                     aria-required="true"
                     aria-label="Please enter your message."></textarea>
-                    {formData.message === "" ? 
-                    <p className="submit-status-error">Please enter a message.</p> : null}
+                    {error.message ? 
+                    <p className="submit-status-error">{error.message}</p> : null}
                 </div>
 
                 <div className="consent-container">
@@ -223,12 +205,12 @@ export function ContactForm() {
                     id="consent" 
                     name="consent" 
                     checked={consent} 
-                    onChange={() => setConsent(!consent)}
+                    onChange={() => { setConsent(!consent); setError(prev => ({...prev, consent: ''})) }}
                     aria-required="true"
                     aria-label="Check this to agree to being contacted by the team."/>
                     <label htmlFor="consent">I agree to being contacted by the team. *</label>
-                    {!consent ? 
-                    <p className="submit-status-error">To submit this form, you must agree to being contacted by our team.</p> : null}
+                    {error.consent ? 
+                    <p className="submit-status-error">{error.consent}</p> : null}
                 </div>
 
                 <button 
